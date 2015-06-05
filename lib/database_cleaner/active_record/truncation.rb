@@ -162,7 +162,11 @@ module DatabaseCleaner
         # with using the base list. If a table exists in multiple schemas
         # within the search path, truncation without the schema name could
         # result in confusing, if not unexpected results.
-        @database_cleaner_tables ||= tables_with_schema
+
+        # We don't want to use `@instance_var = table_with_schema`
+        # here becuase the user may change the ActiveRecord schema
+        # they are using.
+        tables_with_schema
       end
 
       private
